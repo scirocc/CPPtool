@@ -283,6 +283,16 @@ def autoReplenishFile():
                     str_ = '\n#endif'
                     f.write(str_)
 
+def pushShutcut():
+    time.sleep(1)
+
+    win32api.keybd_event(16, 0, 0, 0)  # shift
+    # win32api.keybd_event(48, 0, 0, 0)  # shift
+    win32api.keybd_event(121, 0, 0, 0)  # f10
+    time.sleep(0.1)
+    # win32api.keybd_event(48, 0, win32con.KEYEVENTF_KEYUP, 0)  # 释放按键
+    win32api.keybd_event(16, 0, win32con.KEYEVENTF_KEYUP, 0)  # 释放按键
+    win32api.keybd_event(121, 0, win32con.KEYEVENTF_KEYUP, 0)  # 释放按键
 
 def main():
     s = sys.argv
@@ -300,7 +310,8 @@ def main():
     WriteMake()
     autoReplenishFile()
     WriteMake()
-
+    pushShutcut()
+    return 0
 
 main()
 # gen_str_to_write_in_headerfile('E:\CLionProjects\MultiFactor\src\getData/getTradebleShare.cpp')
