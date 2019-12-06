@@ -122,6 +122,7 @@ def WriteMake():
             lib = lib.replace('\\', '/')
             str1_ += lib + '\n'
         str1_ += 'python36.lib' + '\n'  # 添加这个东西
+        str1_ += 'imagehlp.lib' + '\n'  # 添加这个东西
         str1_ += ')\n'
         f.write('{}'.format(str1_))
         str1_ = 'TARGET_LINK_LIBRARIES({}'.format(projectName) + ' \n'
@@ -302,10 +303,8 @@ def autoReplenishFile():
 def pushShutcut():
     time.sleep(1)
     win32api.keybd_event(16, 0, 0, 0)  # shift
-    # win32api.keybd_event(48, 0, 0, 0)  # shift
     win32api.keybd_event(121, 0, 0, 0)  # f10
     time.sleep(0.1)
-    # win32api.keybd_event(48, 0, win32con.KEYEVENTF_KEYUP, 0)  # 释放按键
     win32api.keybd_event(16, 0, win32con.KEYEVENTF_KEYUP, 0)  # 释放按键
     win32api.keybd_event(121, 0, win32con.KEYEVENTF_KEYUP, 0)  # 释放按键
 
