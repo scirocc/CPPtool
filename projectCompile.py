@@ -225,10 +225,13 @@ def gen_str_to_write_in_headerfile(sourceFilePath):
     with open(sourceFilePath, 'r', encoding='utf-8')as f:
         datas = f.readlines()
     sData = [line for line in datas if '#include' not in line]
+    sInclude_str=[line for line in datas if '#include' in line]
     str_ = "".join(sData)
     str_=getRidOfTextBetweenDoubleQuote(str_)
     str_=getRidOfTextBetweenSingleQuote(str_).strip()
     str_=dealData(str_)
+    str_include="".join(sInclude_str)+'\n'
+    str_=str_include+str_
     return (str_)
 
 def finalAdjustContent(content):
@@ -241,6 +244,17 @@ def finalAdjustContent(content):
         sTemp.append(line)
     return('\n'.join(sTemp))
 
+def reWriteThisCPPFile(sourceFilePath):
+    with open(sourceFilePath, 'r', encoding='utf-8')as f:
+        datas = f.readlines()
+    sData = [line for line in datas if '#include' not in line]
+    sInclude_str = [line for line in datas if '#include' in line]
+    print(sourceFilePath.split('\\'))
+    headerName=sourceFilePath.split('\\')[-1].replace('.cpp','.h')
+    str_='#include"{}"\n'.format(headerName)
+    str_=str_+"".join(sData)
+    with open(sourceFilePath, 'w', encoding='utf-8')as f:
+        f.write(str_)
 
 
 def autoReplenishFile():
@@ -282,10 +296,11 @@ def autoReplenishFile():
                     f.write(content)
                     str_ = '\n#endif'
                     f.write(str_)
+                reWriteThisCPPFile(file)#改头
+
 
 def pushShutcut():
     time.sleep(1)
-
     win32api.keybd_event(16, 0, 0, 0)  # shift
     # win32api.keybd_event(48, 0, 0, 0)  # shift
     win32api.keybd_event(121, 0, 0, 0)  # f10
@@ -310,7 +325,7 @@ def main():
     WriteMake()
     autoReplenishFile()
     WriteMake()
-    pushShutcut()
+    # pushShutcut()
     return 0
 
 main()
