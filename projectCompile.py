@@ -67,112 +67,161 @@ def findALLIncludeFile(ab_dir):
 
 
 def WriteMake():
-    s = sys.argv
-    x, projectFiledir, filedir = s
-    projectName = projectFiledir[projectFiledir.rfind('\\') + 1:]
-    # 找出项目绝对路径
-    ab_dir = s[1]
-    print('项目绝对路径:', ab_dir)
-    findAllSrcFile(ab_dir + '/src/*')
-    findAllSrcFile(ab_dir + '/MyTool/src/*')
-    findALLLibFile(ab_dir + '/bin/*')
-    findALLDllFile(ab_dir + '/bin/*')
-    findALLIncludeFile(ab_dir + '/include/*')
-    findALLIncludeFile(ab_dir + '/MyTool/include/*')
-
-    findALLLibFile('E:/frequentlyUsedCPPLibrary/bin/*')
-    findALLDllFile('E:/frequentlyUsedCPPLibrary/bin/*')
-    findALLIncludeFile('E:/frequentlyUsedCPPLibrary/include/*')
-    print('项目源文件集合:', sSrcFile)
-    print('项目动态库文件集合:', sDLL)
-    print('项目静态库文件集合:', sLIB)
-    print('项目头文件夹集合:', sInclude)
-    print('项目库文件夹集合:', slibFolder)
-    print('项目头文件夹集合:', sIncludefolder)
-    str_ = 'add_executable({}\n'.format(projectName)
-    for srcFile in set(sSrcFile):
-        srcFile = srcFile.replace('\\', '/')
-        str_ += srcFile + '\n'
-    for header in set(sInclude):
-        header = header.replace('\\', '/')
-        str_ += header + '\n'
-    str_ += 'D:/ProgramData/Anaconda3/include/Python.h' + '\n'
-    str_ += ')\n'
-    str_.replace('i', 'iiiiiiiiiiii')
-    with open(ab_dir + '/CMakeLists.txt', 'w')as f:
-        f.write('cmake_minimum_required(VERSION 3.14)\n')
-        f.write('project({})\n'.format(projectName))
-        f.write('set(CMAKE_CXX_STANDARD 17)\n')
-        f.write('set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")\n')
-        f.write('include_directories(include)\n')
-        f.write(
-            'include_directories(D:/ProgramData/Anaconda3/include)\n')  # 还要把python的inlcude文件夹添加进来，因为有可能和python交互，用到python.h
-        for dir in set(sIncludefolder):
-            dir = dir.replace('\\', '/')
-            f.write('include_directories({})\n'.format(dir))
-        f.write('link_directories(bin)\n')
-        f.write(
-            'link_directories(D:/ProgramData/Anaconda3/libs)\n')  # 还要把python的inlcude文件夹添加进来，因为有可能和python交互，用到python36.lib
-        for dir in set(slibFolder):
-            dir = dir.replace('\\', '/')
-            f.write('include_directories({})\n'.format(dir))
-        f.write(str_)  # add_executable信息
-        str1_ = 'TARGET_LINK_LIBRARIES({}'.format(projectName) + ' \n'
-        for lib in set(sLIB):
-            lib = lib.replace('\\', '/')
-            str1_ += lib + '\n'
-        str1_ += 'python36.lib' + '\n'  # 添加这个东西
-        str1_ += 'imagehlp.lib' + '\n'  # 添加这个东西
-        str1_ += ')\n'
-        f.write('{}'.format(str1_))
-        str1_ = 'TARGET_LINK_LIBRARIES({}'.format(projectName) + ' \n'
-        for dll in set(sDLL):
-            dll = dll.replace('\\', '/')
-            str1_ += dll + '\n'
-        str1_ += ')\n'
-        f.write('{}'.format(str1_))
+    pass
+    # str_ = 'add_executable({}\n'.format(projectName)
+    # for srcFile in set(sSrcFile):
+    #     srcFile = srcFile.replace('\\', '/')
+    #     str_ += srcFile + '\n'
+    # for header in set(sInclude):
+    #     header = header.replace('\\', '/')
+    #     str_ += header + '\n'
+    # str_ += 'D:/ProgramData/Anaconda3/include/Python.h' + '\n'
+    # str_ += ')\n'
+    # str_.replace('i', 'iiiiiiiiiiii')
+    # with open(ab_dir + '/CMakeLists.txt', 'w')as f:
+    #     f.write('cmake_minimum_required(VERSION 3.14)\n')
+    #     f.write('project({})\n'.format(projectName))
+    #     f.write('set(CMAKE_CXX_STANDARD 17)\n')
+    #     f.write('set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")\n')
+    #     f.write('include_directories(include)\n')
+    #     f.write(
+    #         'include_directories(D:/ProgramData/Anaconda3/include)\n')  # 还要把python的inlcude文件夹添加进来，因为有可能和python交互，用到python.h
+    #     for dir in set(sIncludefolder):
+    #         dir = dir.replace('\\', '/')
+    #         f.write('include_directories({})\n'.format(dir))
+    #     f.write('link_directories(bin)\n')
+    #     f.write(
+    #         'link_directories(D:/ProgramData/Anaconda3/libs)\n')  # 还要把python的inlcude文件夹添加进来，因为有可能和python交互，用到python36.lib
+    #     for dir in set(slibFolder):
+    #         dir = dir.replace('\\', '/')
+    #         f.write('include_directories({})\n'.format(dir))
+    #     f.write(str_)  # add_executable信息
+    #     str1_ = 'TARGET_LINK_LIBRARIES({}'.format(projectName) + ' \n'
+    #     for lib in set(sLIB):
+    #         lib = lib.replace('\\', '/')
+    #         str1_ += lib + '\n'
+    #     str1_ += 'python36.lib' + '\n'  # 添加这个东西
+    #     str1_ += 'imagehlp.lib' + '\n'  # 添加这个东西
+    #     str1_ += ')\n'
+    #     f.write('{}'.format(str1_))
+    #     str1_ = 'TARGET_LINK_LIBRARIES({}'.format(projectName) + ' \n'
+    #     for dll in set(sDLL):
+    #         dll = dll.replace('\\', '/')
+    #         str1_ += dll + '\n'
+    #     str1_ += ')\n'
+    #     f.write('{}'.format(str1_))
 
 
-# readMake()
+def findEffectiveLocOfSign(sign, str_, startLoc):
+    loc = str_.find(sign, startLoc)
+    if loc == -1:
+        return -1
+    unEffectiveCase1 = (str_[loc - 1] == '\\')
+    locOfPreLinefeed = str_.rfind('\n', 0, loc)  # 最近的换行符位置
+    locOfPreAnnotation = str_.rfind('//', 0, loc)  # 最近的注释位置
+    if locOfPreLinefeed == -1:  # 此时是第一行，前面无换行符
+        if locOfPreAnnotation != -1:  # 前面有注释符
+            unEffectiveCase2 = True  # 属于无效位置
+        else:
+            unEffectiveCase2 = False
+    else:  # 前面有换行符
+        if locOfPreAnnotation != -1:  # 前面有注释符
+            if locOfPreAnnotation > locOfPreLinefeed:  # 属于无效位置
+                unEffectiveCase2 = True
+            else:
+                unEffectiveCase2 = False
+        else:
+            unEffectiveCase2 = False  # 属于有效位置
+    if unEffectiveCase1 == False and unEffectiveCase2 == False:
+        return loc
+    else:  # 说明是无效位置，还要继续找
+        loc = findEffectiveLocOfSign(sign, str_, loc + 1)
+    return (loc)
+
+
+
+
+
+
 
 def getRidOfTextBetweenDoubleQuote(str_):
-    sign_counter = 0
-    endloc = 0
-    sign = '\"'
-    needRecursiveMark=False
-    for index, i in enumerate(str_):
-        if i == sign and str_[index-1]!='\\':
-            sign_counter += 1
-            needRecursiveMark=True
-            if sign_counter == 1:
-                startloc = index
-            elif sign_counter>1 and sign_counter%2==0:
-                endloc=index
-                break
-    if needRecursiveMark:
-        str_ = str_.replace(str_[startloc:endloc + 1], '')
-        str_=getRidOfTextBetweenDoubleQuote(str_)
-    return (str_)
+    # find first有效位置
+    sign='\"'
+    loc = findEffectiveLocOfSign(sign,str_, 0)
+    if loc == -1:
+        result = str_
+        return (str_)
+    else:
+        loc2 = findEffectiveLocOfSign(sign,str_, loc + 1)
+        str_ = str_.replace(str_[loc:loc2 + 1], '')
+        str_ = getRidOfTextBetweenDoubleQuote(str_)
+        return (str_)
 
 def getRidOfTextBetweenSingleQuote(str_):
-    sign_counter = 0
-    endloc = 0
+    # find first有效位置
     sign = '\''
-    needRecursiveMark=False
-    for index, i in enumerate(str_):
-        if i == sign and str_[index-1]!='\\':
-            sign_counter += 1
-            needRecursiveMark=True
-            if sign_counter == 1:
-                startloc = index
-            elif sign_counter>1 and sign_counter%2==0:
-                endloc=index
-                break
-    if needRecursiveMark:
-        str_ = str_.replace(str_[startloc:endloc + 1], '')
-        str_=getRidOfTextBetweenDoubleQuote(str_)
-    return (str_)
+    loc = findEffectiveLocOfSign(sign, str_, 0)
+    if loc == -1:
+        result = str_
+        return (str_)
+    else:
+        loc2 = findEffectiveLocOfSign(sign, str_, loc + 1)
+        str_ = str_.replace(str_[loc:loc2 + 1], '')
+        str_ = getRidOfTextBetweenDoubleQuote(str_)
+        return (str_)
 
+
+def findEffectiveLocOfLeftBrace(str_, startLoc):#查找有效左大括号位置
+    sign='{'
+    loc = str_.find(sign, startLoc)
+    if loc == -1:
+        return -1
+    locOfPreLinefeed = str_.rfind('\n', 0, loc)  # 最近的换行符位置
+    locOfPreAnnotation = str_.rfind('//', 0, loc)  # 最近的注释位置
+    if locOfPreLinefeed == -1:  # 此时是第一行，前面无换行符
+        if locOfPreAnnotation != -1:  # 前面有注释符
+            unEffectiveCase2 = True  # 属于无效位置
+        else:
+            unEffectiveCase2 = False
+    else:  # 前面有换行符
+        if locOfPreAnnotation != -1:  # 前面有注释符
+            if locOfPreAnnotation > locOfPreLinefeed:  # 属于无效位置
+                unEffectiveCase2 = True
+            else:
+                unEffectiveCase2 = False
+        else:
+            unEffectiveCase2 = False  # 属于有效位置
+    if unEffectiveCase2 == False:
+        return loc
+    else:  # 说明是无效位置，还要继续找
+        loc = findEffectiveLocOfSign(sign, str_, loc + 1)
+    return (loc)
+
+def findEffectiveLocOfRightBrace(str_, startLoc):#查找有效左大括号位置
+    sign='}'
+    loc = str_.find(sign, startLoc)
+    if loc == -1:
+        return -1
+    locOfPreLinefeed = str_.rfind('\n', 0, loc)  # 最近的换行符位置
+    locOfPreAnnotation = str_.rfind('//', 0, loc)  # 最近的注释位置
+    if locOfPreLinefeed == -1:  # 此时是第一行，前面无换行符
+        if locOfPreAnnotation != -1:  # 前面有注释符
+            unEffectiveCase2 = True  # 属于无效位置
+        else:
+            unEffectiveCase2 = False
+    else:  # 前面有换行符
+        if locOfPreAnnotation != -1:  # 前面有注释符
+            if locOfPreAnnotation > locOfPreLinefeed:  # 属于无效位置
+                unEffectiveCase2 = True
+            else:
+                unEffectiveCase2 = False
+        else:
+            unEffectiveCase2 = False  # 属于有效位置
+    if unEffectiveCase2 == False:
+        return loc
+    else:  # 说明是无效位置，还要继续找
+        loc = findEffectiveLocOfSign(sign, str_, loc + 1)
+    return (loc)
 
 
 def getIndexOfCorreBrace(str_,startloc):#查找对应右括号的位置
@@ -194,6 +243,19 @@ def getIndexOfCorreBrace(str_,startloc):#查找对应右括号的位置
                     break
     return(endloc)
 
+def getContentWithOutBrace(str_,startLoc):
+    if findEffectiveLocOfLeftBrace(str_,startLoc)==-1:
+        return str_
+    else:
+
+
+
+
+
+
+
+
+
 
 def dealData(str_):#去掉{}当中的内容
     sData=str_.split('\n')
@@ -202,13 +264,16 @@ def dealData(str_):#去掉{}当中的内容
     lastline=''
     for line in sData:
         indexInStr_ += len(line) + 1
-        #1 同一行包括'namespace'或'class'且包括'{' 这样括号间的内容不可删除
-        #2 本行虽然没有'namespace'或'class'，且本行包括'{'，但上一行包括'namespace'或'class',且上一行不含'{' 这样括号间的内容不可删除
-        condition1=(('namespace' in line) or('class' in line))and ('{' in line)
-        condition2=((('namespace' not in line) and('class' not in line))and('{' in line)and(('namespace' in lastline)or('class' in lastline))and('{' not in lastline))
+        #1 同一行包括'namespace'或'class'或‘template’且包括'{' 这样括号间的内容不可删除
+        #2 本行虽然没有'namespace'或'class'，且本行包括'{'，但上一行包括'namespace'或'class'或‘template’,且上一行不含'{' 这样括号间的内容不可删除
+        condition1=(('namespace' in line) or('class' in line)or('template' in line))and ('{' in line)
+        condition2=((('namespace' not in line) and('class' not in line))and('{' in line)and
+                    (('namespace' in lastline)or('class' in lastline)or('template' in lastline))and('{' not in lastline))
         if condition1 or condition2:#不可删除，看下一行
             pass
         else:
+            # print(line)
+            # print('================================')
             recursiveMark=True
             indexOfleftBrace = line.find('{')
             if indexOfleftBrace!=-1:#找到了，那么就可以删除
@@ -220,16 +285,17 @@ def dealData(str_):#去掉{}当中的内容
         lastline=line
     return(str_)
 
-
-
 def gen_str_to_write_in_headerfile(sourceFilePath):
     with open(sourceFilePath, 'r', encoding='utf-8')as f:
         datas = f.readlines()
     sData = [line for line in datas if '#include' not in line]
     sInclude_str=[line for line in datas if '#include' in line]
     str_ = "".join(sData)
+    print('============')
+    print(str_)
     str_=getRidOfTextBetweenDoubleQuote(str_)
     str_=getRidOfTextBetweenSingleQuote(str_).strip()
+
     str_=dealData(str_)
     str_include="".join(sInclude_str)+'\n'
     str_=str_include+str_
@@ -261,6 +327,36 @@ def reWriteThisCPPFile(sourceFilePath):
         f.write(str_)
 
 
+def tell_if_is_templateFile(filepath):
+    with open(filepath,'w',encoding='utf-8')as f:sData=f.readlines()
+    templateMark=False
+    for line in sData:
+        if line.strip():
+            if ('template' in line) and (line.index('template') < line.index('//')):  # 模板关键字并不在注释中
+                templateMark = True
+                break
+    return (templateMark)
+
+def getHPPFileContent(filepath):
+    with open(filepath,'w',encoding='utf-8')as f:sData=f.readlines()
+    content=''.join(sData)
+    return (content)
+
+
+def getHFileContent(filepath):
+    with open(filepath,'w',encoding='utf-8')as f:datas=f.readlines()
+    sData = [line for line in datas if '#include' not in line]
+    sInclude_str = [line for line in datas if '#include' in line]
+    str_ = "".join(sData)
+    str_ = getRidOfTextBetweenDoubleQuote(str_)#去掉正文中的小括号
+    str_ = getRidOfTextBetweenSingleQuote(str_).strip()
+
+
+
+
+
+
+
 def autoReplenishFile():
     s = sys.argv
     projectDir = s[1]
@@ -268,6 +364,86 @@ def autoReplenishFile():
     # 检查所有源文件是否有对应的头文件
     for file in sSrcFile:
         if 'main.cpp' not in file:
+            #1判断其对应的头文件是否存在
+            corresponding_header1 = file.replace('src', 'include').replace('.cpp', '.h')
+            corresponding_header2 = file.replace('src', 'include').replace('.cpp', '.hpp')
+            if (os.path.isfile(corresponding_header1)==False)and(os.path.isfile(corresponding_header2)==False):
+                #此时可知其对应头文件不存在，应该自动补头文件
+                #2判断源文件中，是否包含template字段，且template字段不在注释中，
+                #如果包含那么就全部复制到HPP文件
+                if tell_if_is_templateFile(file):
+                    #若为真，那么全部复制进新的hpp文件
+                    fileName = corresponding_header2.split('\\')[-1].replace('.hpp', '')
+                    sfolder = corresponding_header2.split('\\')
+                    s = []
+                    for folder in sfolder:
+                        s.extend(folder.split('/'))
+                    sFolder = s
+                    sFolder = sFolder[sFolder.index(projectName):-1]
+                    with open(corresponding_header2, 'w')as f:
+                        str_ = '#ifndef '
+                        for folder in sFolder:
+                            str_ += folder.upper() + '_'
+                        str_ += fileName.upper()
+                        str_ += '_H\n'
+                        f.write(str_)
+
+                        str_ = '#define '
+                        for folder in sFolder:
+                            str_ += folder.upper() + '_'
+                        str_ += fileName.upper()
+                        str_ += '_H\n'
+                        f.write(str_)
+
+                        f.write(getHPPFileContent(file))
+
+                        str_ = '\n#endif'
+                        f.write(str_)
+                    #把源文件标志为弃用
+                    with open(file,'w')as f:
+                        f.write('//OriginSrcFile contain template,deprecated')
+                    sSrcFile.remove(file)
+                else:#这个时候不含tempalte，采用正常的分离模式
+                    fileName = corresponding_header1.split('\\')[-1].replace('.h', '')
+                    sfolder = corresponding_header1.split('\\')
+                    s = []
+                    for folder in sfolder:
+                        s.extend(folder.split('/'))
+                    sFolder = s
+                    sFolder = sFolder[sFolder.index(projectName):-1]
+                    with open(corresponding_header1, 'w')as f:
+                        str_ = '#ifndef '
+                        for folder in sFolder:
+                            str_ += folder.upper() + '_'
+                        str_ += fileName.upper()
+                        str_ += '_H\n'
+                        f.write(str_)
+
+                        str_ = '#define '
+                        for folder in sFolder:
+                            str_ += folder.upper() + '_'
+                        str_ += fileName.upper()
+                        str_ += '_H\n'
+                        f.write(str_)
+
+                        f.write(getHFileContent(file))
+
+                        str_ = '\n#endif'
+                        f.write(str_)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             corresponding_header = file.replace('src', 'include').replace('.cpp', '.h')
             sfolder = corresponding_header.split('\\')
             s = []
@@ -282,6 +458,8 @@ def autoReplenishFile():
                 print('sFolder:', sFolder)
                 content=gen_str_to_write_in_headerfile(file)
                 content,templateMark=finalAdjustContent(content)
+                if templateMark:
+                    corresponding_header=corresponding_header.replace('.h','.hpp')
                 with open(corresponding_header, 'w')as f:
                     str_ = '#ifndef '
                     for folder in sFolder:
@@ -298,13 +476,14 @@ def autoReplenishFile():
                     f.write(str_)
 
                     f.write(content)
-                    if templateMark:
-                        str_='\n#include'+"\"{}.cpp\"\n".format(fileName)
-                        f.write(str_)
 
                     str_ = '\n#endif'
                     f.write(str_)
+
                 reWriteThisCPPFile(file)#改头
+                if templateMark:#把原来的cpp文件弃用
+                    with open(file,'w')as f:
+                        f.write('//OriginSrcFile contain template,deprecated')
 
 
 def pushShutcut():
@@ -314,6 +493,32 @@ def pushShutcut():
     time.sleep(0.1)
     win32api.keybd_event(16, 0, win32con.KEYEVENTF_KEYUP, 0)  # 释放按键
     win32api.keybd_event(121, 0, win32con.KEYEVENTF_KEYUP, 0)  # 释放按键
+
+
+def examinFolder():
+    s = sys.argv
+    x, projectFiledir, filedir = s
+    projectName = projectFiledir[projectFiledir.rfind('\\') + 1:]
+    # 找出项目绝对路径
+    ab_dir = s[1]
+    findAllSrcFile(ab_dir + '/src/*')
+    findAllSrcFile(ab_dir + '/MyTool/src/*')
+    findALLLibFile(ab_dir + '/bin/*')
+    findALLDllFile(ab_dir + '/bin/*')
+    findALLIncludeFile(ab_dir + '/include/*')
+    findALLIncludeFile(ab_dir + '/MyTool/include/*')
+    findALLLibFile('E:/frequentlyUsedCPPLibrary/bin/*')
+    findALLDllFile('E:/frequentlyUsedCPPLibrary/bin/*')
+    findALLIncludeFile('E:/frequentlyUsedCPPLibrary/include/*')
+    print('项目源文件集合:', sSrcFile)
+    print('项目动态库文件集合:', sDLL)
+    print('项目静态库文件集合:', sLIB)
+    print('项目头文件夹集合:', sInclude)
+    print('项目库文件夹集合:', slibFolder)
+    print('项目头文件夹集合:', sIncludefolder)
+    return(sSrcFile,sDLL,sLIB,sInclude,slibFolder,sIncludefolder)
+
+
 
 def main():
     s = sys.argv
@@ -328,12 +533,10 @@ def main():
     except:pass
     try:os.makedirs(projectDir+'/MyTool/src/')
     except:pass
-    WriteMake()
+    sSrcFile, sDLL, sLIB, sInclude, slibFolder, sIncludefolder=examinFolder()
     autoReplenishFile()
     WriteMake()
-    # pushShutcut()
     return 0
 
 main()
-# gen_str_to_write_in_headerfile('E:\CLionProjects\MultiFactor\src\getData/getTradebleShare.cpp')
 
