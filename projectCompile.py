@@ -238,12 +238,15 @@ def gen_str_to_write_in_headerfile(sourceFilePath):
 def finalAdjustContent(content):
     sline=content.split('\n')
     sTemp=[]
+    templateMark=False
     for line in sline:
         if line.strip():
             if (line[0]!='#')and('class' not in line)and('template' not in line)and('namespace' not in line)and(line.strip()[-1]==')'):
                 line=line+';'
+            if('template' in line)and(line.index('template')<line.index('//')):#模板关键字并不在注释中
+                templateMark=True
         sTemp.append(line)
-    return('\n'.join(sTemp))
+    return('\n'.join(sTemp),templateMark)
 
 def reWriteThisCPPFile(sourceFilePath):
     with open(sourceFilePath, 'r', encoding='utf-8')as f:
@@ -278,7 +281,7 @@ def autoReplenishFile():
                 sFolder = sFolder[sFolder.index(projectName):-1]
                 print('sFolder:', sFolder)
                 content=gen_str_to_write_in_headerfile(file)
-                content=finalAdjustContent(content)
+                content,templateMark=finalAdjustContent(content)
                 with open(corresponding_header, 'w')as f:
                     str_ = '#ifndef '
                     for folder in sFolder:
@@ -295,6 +298,10 @@ def autoReplenishFile():
                     f.write(str_)
 
                     f.write(content)
+                    if templateMark:
+                        str_='\n#include'+"\"{}.cpp\"\n".format(fileName)
+                        f.write(str_)
+
                     str_ = '\n#endif'
                     f.write(str_)
                 reWriteThisCPPFile(file)#改头
