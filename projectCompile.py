@@ -346,7 +346,7 @@ def autoReplenishFile():
     projectDir = s[1]
     projectName = projectDir.split('\\')[-1]
     # 检查所有源文件是否有对应的头文件
-    for file in sSrcFile:
+    for file in set(sSrcFile):
         if 'main.cpp' not in file:
             #1判断其对应的头文件是否存在
             corresponding_header1 = file.replace('src', 'include').replace('.cpp', '.h')
