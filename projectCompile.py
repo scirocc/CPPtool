@@ -86,6 +86,8 @@ def WriteMake(ab_dir,projectName,sSrcFile,sDLL,sLIB,sInclude,slibFolder,sInclude
         f.write('set(CMAKE_C_COMPILER   "C:/msys64/mingw64/bin/clang+")\n')
         f.write('set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")\n')
         f.write('include_directories(include)\n')
+        f.write('include_directories(E:/eigen-eigen-323c052e1731/eigen-eigen-323c052e1731)\n')
+
         f.write(
             'include_directories(D:/ProgramData/Anaconda3/include)\n')  # 还要把python的inlcude文件夹添加进来，因为有可能和python交互，用到python.h
         for dir in set(sIncludefolder):
