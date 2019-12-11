@@ -81,6 +81,9 @@ def WriteMake(ab_dir,projectName,sSrcFile,sDLL,sLIB,sInclude,slibFolder,sInclude
         f.write('cmake_minimum_required(VERSION 3.14)\n')
         f.write('project({})\n'.format(projectName))
         f.write('set(CMAKE_CXX_STANDARD 17)\n')
+        f.write('set(CMAKE_CXX_STANDARD 17)\n')
+        f.write('set(CMAKE_CXX_COMPILER "C:/msys64/mingw64/bin/clang++")\n')
+        f.write('set(CMAKE_C_COMPILER   "C:/msys64/mingw64/bin/clang+")\n')
         f.write('set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")\n')
         f.write('include_directories(include)\n')
         f.write(
