@@ -368,7 +368,7 @@ def autoReplenishFile():
                         s.extend(folder.split('/'))
                     sFolder = s
                     sFolder = sFolder[sFolder.index(projectName):-1]
-                    with open(corresponding_header2, 'w')as f:
+                    with open(corresponding_header2, 'w',encoding='utf-8')as f:
                         str_ = '#ifndef '
                         for folder in sFolder:
                             str_ += folder.upper() + '_'
@@ -401,7 +401,7 @@ def autoReplenishFile():
                         s.extend(folder.split('/'))
                     sFolder = s
                     sFolder = sFolder[sFolder.index(projectName):-1]
-                    with open(corresponding_header1, 'w')as f:
+                    with open(corresponding_header1, 'w',encoding='utf-8')as f:
                         str_ = '#ifndef '
                         for folder in sFolder:
                             str_ += folder.upper() + '_'
